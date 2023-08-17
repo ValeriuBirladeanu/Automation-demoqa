@@ -1,20 +1,20 @@
 import time
 from pages.base_page import BasePage
-from pages.elements_page import TextBoxPage, CheckBoxPage
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage
+from conftest import driver
 
 
 class TestElements:
-#     class TestTextBox:
-
-        # def test_text_box(self, driver):
-        #     text_box_page = TextBoxPage(driver, 'https://demoqa.com/text-box')
-        #     text_box_page.open()
-        #     full_name, email, current_address, permanent_address = text_box_page.fill_all_fields()
-        #     output_name, output_email, output_currents_address, output_permanent_address = text_box_page.check_filled_form()
-        #     assert full_name == output_name, "the full name does not match"
-        #     assert email == output_email, "the email does not match"
-        #     assert current_address == output_currents_address, "the current address does not match"
-        #     assert permanent_address == output_permanent_address, "the permanent address does not match"
+    class TestTextBox:
+        def test_text_box(self, driver):
+            text_box_page = TextBoxPage(driver, 'https://demoqa.com/text-box')
+            text_box_page.open()
+            full_name, email, current_address, permanent_address = text_box_page.fill_all_fields()
+            output_name, output_email, output_currents_address, output_permanent_address = text_box_page.check_filled_form()
+            assert full_name == output_name, "the full name does not match"
+            assert email == output_email, "the email does not match"
+            assert current_address == output_currents_address, "the current address does not match"
+            assert permanent_address == output_permanent_address, "the permanent address does not match"
 
     class TestCheckBox:
         def test_check_box(self, driver):
@@ -27,3 +27,19 @@ class TestElements:
             print(input_checkbox)
             print(output_result)
             assert input_checkbox == output_result, 'checkboxes have not been selected'
+
+    class TestRadioButton:
+        def test_radio_button(self, driver):
+            radio_button_page = RadioButtonPage(driver, 'https://demoqa.com/radio-button')
+            radio_button_page.open()
+            radio_button_page.click_on_radio_button('yes')
+            output_yes = radio_button_page.get_output_result()
+            radio_button_page.click_on_radio_button('impressive')
+            output_impressive = radio_button_page.get_output_result()
+            radio_button_page.click_on_radio_button('no')  # The element is disabled and cannot be clicked
+            output_no = radio_button_page.get_output_result()
+            assert output_yes == 'Yes', "Yes - not selected"
+            assert output_impressive == 'Impressive', "Impressive - not selected"
+            assert output_no == 'No', "No - not selected"
+
+
